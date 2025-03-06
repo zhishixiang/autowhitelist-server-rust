@@ -2,7 +2,7 @@
 
 use std::{fs, io};
 
-pub use crate::r#struct::submit::{SubmitRequest, SubmitResponse};
+pub use crate::r#struct::submit::SubmitRequest;
 use crate::ws_server::{WsServer, WsServerHandle};
 use actix_web::{web, App, Error, HttpRequest, HttpResponse, HttpServer, Result};
 use sql_server::SqlServer;

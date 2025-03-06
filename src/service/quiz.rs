@@ -4,7 +4,7 @@ use actix_web::{web, HttpRequest, HttpResponse};
 use serde_json::{json, Value};
 use crate::CONFIG;
 use crate::r#struct::awl_type::Key;
-use crate::{SubmitRequest, SubmitResponse};
+use crate::r#struct::submit::{SubmitRequest, SubmitResponsePass, SubmitResponseFail};
 use crate::sql_server::SqlServerHandle;
 use crate::utils::{mark, read_file};
 use crate::ws_server::WsServerHandle;
@@ -120,8 +120,10 @@ pub(crate) async fn submit(
             let key: Key = paper_info["client_key"].as_str().unwrap().to_string();
             ws_server.send_message(key, player_id).await;
             sql_server.record_player_success_log(paper_id, player_id.to_string(), req.connection_info().peer_addr().unwrap().to_string()).await.unwrap();
+            
         }
+        let count = sql_server.get_client_player_count(paper_id).await.unwrap();
+        return HttpResponse::Ok().json(SubmitResponsePass { score, pass, count })
     }
-    let count = sql_server.get_client_player_count(paper_id).await.unwrap();
-    HttpResponse::Ok().json(SubmitResponse { score, pass, count })
+    HttpResponse::Ok().json(SubmitResponseFail { score, pass })
 }

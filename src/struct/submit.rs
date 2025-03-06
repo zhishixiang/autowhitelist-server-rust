@@ -10,10 +10,16 @@ pub struct SubmitRequest {
 }
 
 #[derive(Serialize)]
-pub struct SubmitResponse {
+pub struct SubmitResponsePass {
     pub(crate) score: i64,
     pub(crate) pass: bool,
     pub(crate) count: u32,
+}
+
+#[derive(Serialize)]
+pub struct SubmitResponseFail {
+    pub(crate) score: i64,
+    pub(crate) pass: bool,
 }
 
 #[derive(Deserialize,Debug)]

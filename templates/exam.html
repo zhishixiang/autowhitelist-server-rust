@@ -92,7 +92,12 @@
                 })
 
                     .then(function (response) {
-                        alert("提交成功，您的分数是" + JSON.parse(response.data.score) + "分\n答题信息："+"\n玩家id:"+this.player_id+"\n答题时间戳:"+Date.now()+"\n是否及格:"+response.data.pass)
+                        alert("提交成功，您的分数是" + JSON.parse(response.data.score) + "分\n" +
+                            "答题信息："+"\n" +
+                            "玩家id:"+this.player_id+"\n" +
+                            "答题时间戳:"+Date.now()+"\n" +
+                            "是否及格:"+response.data.pass+"\n" + 
+                            "您当前的分数未达到设置的及格线，点击确定即可重新作答")
                         location.reload()
                     })
                     .catch(function (error) {
